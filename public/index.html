@@ -1,9 +1,6 @@
 <!--
-Last updated: 05/10/2022
+Last updated: 10/21/2022
 Description: Sets up page and button HTML that is formatted in ./index.css and ./index.js.
-TODO:
-- Add necessary buttons within the navigation bar.
-- Remove unnecessary buttons within the navigation bar.
 -->
 
 <!DOCTYPE html>
@@ -11,23 +8,22 @@ TODO:
   
   <!-- Sets tab title. -->
   <head>
+    <meta charset="utf-8">
     <title>Database Scrubber</title>
+    <link rel="stylesheet" type="text/css" href="C:\Users\bolto\Desktop\datascrubbing\src\App.css"></link>
   </head>
-
-  <!-- Sets navigation bar links for logo/home, contact, and about. -->
-  <div class="header">
-    <a href="#home" class="logo">ScrubbingApp</a>
-    <div class="header-right">
-      <a class="active" href="#home">Home</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
-    </div>
-  </div>
 
   <!-- Error message for when the user has not enabled JavaScript. -->
   <body>
+    <script type=”text/javascript” src=”App.js”></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
 
+  <!-- Section to allow user to submit necessary file. -->
+  <div id="app">
+    <form id="controls-form">
+      <input type="file" id="fileinput" accept=".csv" />
+    </form>
+  </div>
 </html>

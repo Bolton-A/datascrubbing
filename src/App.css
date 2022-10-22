@@ -1,22 +1,87 @@
 /*
-Last updated: 05/10/2022
-Description: Sets up ./app appearance appearance.
-TODO:
+Last updated: 10/21/2022
+Description: Sets up ./app appearance.
 */
 
-/* Aligns content within the center. */
-.App {
+@import '~antd/dist/antd.css';
+
+textarea { height: auto; }
+
+textarea {
+	max-width: 100%;
+}
+
+.submit{
+  display: block;
+  width: 100%;
+  border: .5px solid dimgray;
+  background-color: whitesmoke;
+  padding: 8px 28px;
+  font-size: 16px;
+  cursor: pointer;
   text-align: center;
 }
 
-/* Aligns header within the center. */
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.discreet{
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
 }
+
+.empty{
+  display: block;
+  width: 100%;
+  border: .5px solid dimgray;
+  background-color: whitesmoke;
+  padding: 4px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: white;
+  color: black;
+}
+
+#controls-form {
+  text-align: center;
+  margin: 2em auto;
+}
+
+#csv-table {
+  padding: 1em;
+  border-collapse: collapse;
+  background-color: gainsboro;
+  width: 90%;
+  margin: 1em auto;
+}
+
+#csv-table__header tr {
+  background-color: (white, 20%);
+  border: 1px solid lightgray;
+}
+
+#csv-table__header th {
+  background-color: gainsboro;
+  border: .5px solid dimgray;
+  padding: .65em;
+}
+
+#csv-table__body tr {
+  border: .5px solid dimgray;
+  text-align: center;
+}
+
+#csv-table__body tr:nth-child(even){
+  background-color: white;
+}
+
+#csv-table__body td {
+  padding: .65em;
+  word-break: break-all;
+}
+
