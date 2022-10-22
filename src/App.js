@@ -1,6 +1,13 @@
 /*
-Last updated: 10/21/2022
+Last updated: 10/22/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
+TODO:
+- Rebuild table using Ant Design features, sorting, and features.
+- Make it so that 'Submit Query' automatically sends and updates table.
+- Make it so that tables can be uploaded without refreshing.
+- Create layout feature where query input is on one side and table is on the other. (Ant Design layouts)
+- Add undo/redo feature.
+- Allow user to save queries/commands.
 */
 
 // Import necessary libraries.
@@ -70,6 +77,8 @@ const App = () => {
   Section: Populate To Table
   Description: Code waits for csv file to be uploaded from index.html side. Then checks to ensure that the uploaded file is a csv before parsing file
   where it detects a set of characters to seperate entries. Then builds the table by its headers and subsequent rows.
+  TODO:
+  I intend to rebuild this section using Ant Design to make it cleaner and more easily understood.
   */
   function populateToTable()
   {
@@ -322,3 +331,11 @@ const App = () => {
   );
 };
 export default App;
+
+/*
+REFERENCES: 
+https://codepen.io/davewallace/pen/zwwRoN: Used for creating textarea.
+https://www.codecademy.com/forum_questions/512d28a06918338f2300e9ea: Used for creating application alerts.
+https://codepen.io/manifoldkaizen/pen/jYmbGy: Used for opening results.csv and converting to table.
+
+*/
