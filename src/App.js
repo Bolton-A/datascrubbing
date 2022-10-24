@@ -21,7 +21,8 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 const { TextArea } = Input;
 
-const App = () => {
+const App = () => 
+{
 
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
@@ -34,7 +35,8 @@ const App = () => {
   function clearWebApp() 
   {
     // If the user confirms then the window will refresh. Displays success message.
-    if (window.confirm('Are you sure you want to clear the table and your query?')) {
+    if (window.confirm('Are you sure you want to clear the table and your query?')) 
+    {
       window.location.reload()
       console.log('Table and query have been cleared.');
     } 
@@ -119,9 +121,8 @@ const App = () => {
         complete: function(response) 
         {
           console.log('loaded')
-          const headersArray = response.meta.fields;
           const rows = response.data;
-          buildTable(headersArray, rows);
+          buildTable(rows);
         },
         error: (error) => alert(error),
         download: false,
@@ -138,31 +139,13 @@ const App = () => {
     };
     
     // Builds table using the headers and rows retrieved above.
-    const buildTable = (headersArray, rows) => 
+    const buildTable = (rows) => 
     {
       console.log('rendering started')
-
-      // Sets table headers.
-      let tableHeader = document.getElementById("csv-table__header");
-      tableHeader.innerHTML = "";
     
       // Sets table body.
       let tableBody = document.getElementById("csv-table__body");
       tableBody.innerHTML = "";
-      
-      // Builds table headers. If headersArray has some value, go through each value and append.
-      let headerFragment = document.createDocumentFragment();
-      if (headersArray)
-      {
-        headersArray.forEach((header, index) => 
-        {
-          let th = document.createElement("th");
-          let txt = document.createTextNode(headersArray[index]);
-          th.appendChild(txt);
-          headerFragment.appendChild(th);
-        });
-        tableHeader.appendChild(headerFragment);
-      }
     
       // Builds table body. If row has some value, go through each value and append.
       let rowsFragment = document.createDocumentFragment();
@@ -318,14 +301,11 @@ const App = () => {
 
       {/* Creates table with empty section, instructing the user how to proceed. */}
       <table id="csv-table">
-        <thead>
-          <tr id="csv-table__header">
+          <tbody id="csv-table__body">
             <Empty class='empty'>
               <Text><p>Enter your query, press <Text code>Submit SQL</Text> then click <Text code>Choose File</Text> to get started!</p></Text>
             </Empty> 
-          </tr>
-        </thead>
-        <tbody id="csv-table__body"></tbody>
+            </tbody>
       </table>
     </>
   );
