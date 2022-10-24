@@ -67,11 +67,8 @@ const App = () =>
     }
     // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
     myVar = 'DELETE FROM Logins;'
-        const request = new XMLHttpRequest();
-        request.open('POST', '/profile', false);
-        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.onreadystatechange = function() {};
-        request.send('myVar=' + myVar);
+        sendRequest()
+        viewAll()
         alert("Your database was successfully cleared!");
   }
 
@@ -120,7 +117,6 @@ const App = () =>
         step: undefined,
         complete: function(response) 
         {
-          console.log('loaded')
           const rows = response.data;
           buildTable(rows);
         },
@@ -129,10 +125,6 @@ const App = () =>
         skipEmptyLines: false,
         chunk: undefined,
         fastMode: undefined,
-        beforeFirstChunk: () => 
-        {
-          console.log('loading...')
-        },
         withCredentials: undefined
       };
       Papa.parse(file, config);
@@ -141,19 +133,17 @@ const App = () =>
     // Builds table using the headers and rows retrieved above.
     const buildTable = (rows) => 
     {
-      console.log('rendering started')
-    
       // Sets table body.
       let tableBody = document.getElementById("csv-table__body");
       tableBody.innerHTML = "";
     
       // Builds table body. If row has some value, go through each value and append.
       let rowsFragment = document.createDocumentFragment();
-      console.log('Rows:', rows.length);
-      rows.forEach((row, index) => 
+      rows.forEach((row) => 
       {
         var tr = document.createElement("tr");
-        Object.values(row).forEach(item => {
+        Object.values(row).forEach(item => 
+        {
           let td = document.createElement("td");
           let txt = document.createTextNode(item);
           td.appendChild(txt);
@@ -162,9 +152,6 @@ const App = () =>
         });
         tableBody.appendChild(rowsFragment);
       });
-
-      // Display success message.
-      console.log('rendering finished');
     };
     
     // Listens to events from index.html.
@@ -208,6 +195,12 @@ const App = () =>
   {
     myVar = 'SELECT * FROM Logins;'
     sendRequest()
+  }
+
+  // Performs the above but displays success message.
+  function selectAll()
+  {
+    viewAll()
     alert("Your query was successfully submitted!");
   }
 
@@ -217,8 +210,12 @@ const App = () =>
   */
   function fiveSample()
   {
+    // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
+    myVar = 'DELETE FROM Logins;'
+    sendRequest()
     myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'laura123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'ron345', 'ron@gmail.com', 2);"
     sendRequest()
+    viewAll()
     alert("You are ready to query this sample!");
   }
 
@@ -228,9 +225,13 @@ const App = () =>
   */
   function twentySample()
   {
+    // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
+    myVar = 'DELETE FROM Logins;'
+    sendRequest()
     myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'ls123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'rr345', 'ron@gmail.com', 2), ('TinaNash', 'tn678', 'tina@gmail.com', 2), ('LutherTodd', 'lt901', 'luther@gmail.com', 2), ('GertrudeRamirez', 'gr234', 'gertrude@gmail.com', 2), ('ErvinPadilla', 'ep567', 'ervin@gmail.com', 2), ('TerrenceClark', 'tc890', 'terraence@gmail.com', 2), ('DaveFreeman', 'df123', 'dave@gmail.com', 2), ('JoseWalt', 'jw456', 'jose@gmail.com', 2), ('KariGutierrez', 'kg789', 'kari@gmail.com', 2), ('LeonardFrank', 'lf012', 'leonard@gmail.com', 2), ('SilviaRoss', 'sr345', 'silvia@gmail.com', 2), ('DarinFletcher', 'df678', 'darin@gmail.com', 2), ('HoraceCarrol', 'hc901', 'horace@gmail.com', 2), ('EarlSwanson', 'es234', 'earl@gmail.com', 2), ('VanessaWoods', 'vw567', 'vanessa@gmail.com', 2), ('RubyEdwards', 're890', 'ruby@gmail.com', 2);"
     sendRequest()
-    alert("You are ready to query this sample!");
+    viewAll()
+    alert("You are ready to use this sample!");
   }
 
   // Checks if a change has occurred. (Used for collapsible elements.)
@@ -276,7 +277,7 @@ const App = () =>
       <Collapse defaultActiveKey={['0']} onChange={onChange}>
         <Panel header="Pregenerated Commands" key="1">
           {/* Loads results.csv with all entries from Logins. */}
-          <button type="button" class="submit" onClick = {viewAll}>Select All Logins</button>
+          <button type="button" class="submit" onClick = {selectAll}>Select All Logins</button>
           {/* Loads five sample entries into Logins. */}
           <button type="button" class="submit" onClick = {fiveSample}>Insert Five Sample Entries</button>
           {/* Loads twenty sample entries into Logins. */}
@@ -317,5 +318,4 @@ REFERENCES:
 https://codepen.io/davewallace/pen/zwwRoN: Used for creating textarea.
 https://www.codecademy.com/forum_questions/512d28a06918338f2300e9ea: Used for creating application alerts.
 https://codepen.io/manifoldkaizen/pen/jYmbGy: Used for opening results.csv and converting to table.
-
 */
