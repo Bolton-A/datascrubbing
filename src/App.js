@@ -2,18 +2,17 @@
 Last updated: 10/22/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 TODO:
-- Rebuild table using Ant Design features, sorting, and features.
 - Make it so that 'Submit Query' automatically sends and updates table.
 - Make it so that tables can be uploaded without refreshing.
 - Create layout feature where query input is on one side and table is on the other. (Ant Design layouts)
-- Add undo/redo feature.
 - Allow user to save queries/commands.
 */
 
 // Import necessary libraries.
-import { Input, Collapse, Typography, Empty, Divider } from 'antd';
-import React from 'react';
+import { Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
+import { CodeOutlined, ClearOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import Papa from "papaparse";
+import React from 'react';
 import "./App.css";
 
 // Declare constants.
@@ -26,51 +25,6 @@ const App = () =>
 
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
-
-  /*
-  Section: Clear Web Application
-  Description: Refreshes window, clearing the table and the query input section.(DOES NOT CLEAR DATABASE/results.csv).
-  Provides the user with a prompt informing user of what will happen and asking if they would like to contionue before refreshing.
-  */
-  function clearWebApp() 
-  {
-    // If the user confirms then the window will refresh. Displays success message.
-    if (window.confirm('Are you sure you want to clear the table and your query?')) 
-    {
-      window.location.reload()
-      console.log('Table and query have been cleared.');
-    } 
-    // If the user refuses then the window will remain the same.
-    else 
-    {
-      console.log('Table and query have been spared.');
-    }
-  }
-
-  /*
-  Section: Clear Database
-  Description: Performs the above function in refreshing the page to clear the table and the query input section. Then sends a query to remove all
-  records within the Login table. Like Clear Web Application, it will explain what will happen and asks if the user would like to continue or not.
-  */
-  function clearDatabase()
-  {
-    // If the user confirms then the window will refresh.
-    if (window.confirm('Are you sure you want to remove everything from the database and your current query?')) 
-    {
-      window.location.reload()
-      console.log('Database has been emptied.');
-    } 
-    // If the user refuses then the window will remain the same.
-    else 
-    {
-      console.log('Database has been spared.');
-    }
-    // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
-    myVar = 'DELETE FROM Logins;'
-        sendRequest()
-        viewAll()
-        alert("Your database was successfully cleared!");
-  }
 
   /*
   Section: Populate To Table
@@ -98,6 +52,7 @@ const App = () =>
       else 
       {
         parseCSV(fileInput.files[0]);
+        
       }
     };
     
@@ -106,26 +61,11 @@ const App = () =>
     {
       const config = 
       {
-        delimiter: "",
-        newline: "",
-        quoteChar: '"',
-        dynamicTyping: false,
-        preview: 0,
-        encoding: "",
-        worker: false,
-        comments: false,
-        step: undefined,
         complete: function(response) 
         {
           const rows = response.data;
           buildTable(rows);
         },
-        error: (error) => alert(error),
-        download: false,
-        skipEmptyLines: false,
-        chunk: undefined,
-        fastMode: undefined,
-        withCredentials: undefined
       };
       Papa.parse(file, config);
     };
@@ -177,16 +117,6 @@ const App = () =>
   }
 
   /*
-  Section: Post Data
-  Description: Calls for Send Request to send myVar to base.py and displays success message.
-  */
-  function postData()
-  {
-    sendRequest()
-    alert("Your SQL was successfully submitted!");
-  }
-
-  /*
   Section: View All
   Description: Calls for Send Request to send myVar as 'SELECT * FROM Logins;' to base.py and displays success message.
   This causes all entries within the Login table to be sent to the csv.
@@ -195,13 +125,6 @@ const App = () =>
   {
     myVar = 'SELECT * FROM Logins;'
     sendRequest()
-  }
-
-  // Performs the above but displays success message.
-  function selectAll()
-  {
-    viewAll()
-    alert("Your query was successfully submitted!");
   }
 
   /*
@@ -216,7 +139,7 @@ const App = () =>
     myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'laura123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'ron345', 'ron@gmail.com', 2);"
     sendRequest()
     viewAll()
-    alert("You are ready to query this sample!");
+    alert("You are ready to open the file for this sample!");
   }
 
   /*
@@ -231,7 +154,91 @@ const App = () =>
     myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'ls123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'rr345', 'ron@gmail.com', 2), ('TinaNash', 'tn678', 'tina@gmail.com', 2), ('LutherTodd', 'lt901', 'luther@gmail.com', 2), ('GertrudeRamirez', 'gr234', 'gertrude@gmail.com', 2), ('ErvinPadilla', 'ep567', 'ervin@gmail.com', 2), ('TerrenceClark', 'tc890', 'terraence@gmail.com', 2), ('DaveFreeman', 'df123', 'dave@gmail.com', 2), ('JoseWalt', 'jw456', 'jose@gmail.com', 2), ('KariGutierrez', 'kg789', 'kari@gmail.com', 2), ('LeonardFrank', 'lf012', 'leonard@gmail.com', 2), ('SilviaRoss', 'sr345', 'silvia@gmail.com', 2), ('DarinFletcher', 'df678', 'darin@gmail.com', 2), ('HoraceCarrol', 'hc901', 'horace@gmail.com', 2), ('EarlSwanson', 'es234', 'earl@gmail.com', 2), ('VanessaWoods', 'vw567', 'vanessa@gmail.com', 2), ('RubyEdwards', 're890', 'ruby@gmail.com', 2);"
     sendRequest()
     viewAll()
-    alert("You are ready to use this sample!");
+    alert("You are ready to open the file for this sample!");
+  }
+
+  /*
+  Section: Select All
+  Description: Executes query selecting all items from table.
+  */
+  function selectAll()
+  {
+    viewAll()
+    alert("Your query was successfully submitted!");
+  }
+
+  /*
+  Section: Post Data
+  Description: Calls for Send Request to send myVar to base.py and displays success message.
+  */
+  function postData()
+  {
+    sendRequest()
+    alert("Your SQL was successfully submitted!");
+  }
+
+  /*
+  Section: Copy Text
+  Description: Copies the text from textarea to clipboard.
+  */
+  function copyText() 
+  {
+    let textarea = document.getElementById("textarea");
+    textarea.select();
+    document.execCommand("copy");
+  }
+
+  /*
+  Section: Clear Web Application
+  Description: Refreshes window, clearing the table and the query input section.(DOES NOT CLEAR DATABASE/results.csv).
+  Provides the user with a prompt informing user of what will happen and asking if they would like to contionue before refreshing.
+  */
+  function clearWebApp() 
+  {
+    // If the user confirms then the window will refresh. Displays success message.
+    if (window.confirm('Are you sure you want to clear the table and your query?')) 
+    {
+      window.location.reload()
+      console.log('Table and query have been cleared.');
+    } 
+    // If the user refuses then the window will remain the same.
+    else 
+    {
+      console.log('Table and query have been spared.');
+    }
+  }
+
+  /*
+  Section: Clear Database
+  Description: Performs the above function in refreshing the page to clear the table and the query input section. Then sends a query to remove all
+  records within the Login table. Like Clear Web Application, it will explain what will happen and asks if the user would like to continue or not.
+  */
+  function clearDatabase()
+  {
+    // If the user confirms then the window will refresh.
+    if (window.confirm('Are you sure you want to remove everything from the database and your current query?')) 
+    {
+      // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
+      myVar = 'DELETE FROM Logins;'
+      sendRequest()
+      viewAll()
+      window.location.reload()
+      console.log('Database has been emptied.');
+    } 
+    // If the user refuses then the window will remain the same.
+    else 
+    {
+      console.log('Database has been spared.');
+    }
+  }
+
+  /*
+  Section: SQL Help
+  Description: Send user to CodeAcademy SQL cheat sheet.
+  */
+  function sqlHelp() 
+  {
+    window.open("https://www.codecademy.com/learn/learn-sql/modules/learn-sql-queries/cheatsheet", "_blank");
   }
 
   // Checks if a change has occurred. (Used for collapsible elements.)
@@ -275,30 +282,38 @@ const App = () =>
 
       {/* Collapsable section. Displays pregenerated command buttons. */}
       <Collapse defaultActiveKey={['0']} onChange={onChange}>
-        <Panel header="Pregenerated Commands" key="1">
-          {/* Loads results.csv with all entries from Logins. */}
-          <button type="button" class="submit" onClick = {selectAll}>Select All Logins</button>
+        <Panel header="Generate Sample Entries" key="1">
           {/* Loads five sample entries into Logins. */}
           <button type="button" class="submit" onClick = {fiveSample}>Insert Five Sample Entries</button>
           {/* Loads twenty sample entries into Logins. */}
           <button type="button" class="submit" onClick = {twentySample}>Insert Twenty Sample Entries</button>
-          {/* Deletes everything in Logins. */}
-          <input type="button" class="submit" id="btnDelete" value="Clear Database" onClick={clearDatabase}/>
         </Panel>
       </Collapse>
-    
+
+      {/* Displays a menu of buttons. */}
+      <Menu class="menu" mode="horizontal">
+        {/* Selects all results from table. */}
+        <Button type="default" onClick={selectAll} icon={<CodeOutlined />}>Select All</Button>
+        {/* Updates results.csv with results. */}
+        <Button type="default" onClick = {postData} icon={<ConsoleSqlOutlined />}>Execute Query</Button>
+        {/* Copies textarea to clipboard. */}
+        <Button type="default" onClick={copyText} icon={<CopyOutlined />}>Copy to Clipboard</Button>
+        {/* Clears clears query section and table. (DOES NOT CLEAR DATABASE.) */}
+        <Button type="default" onClick={clearWebApp} icon={<ClearOutlined />}>Clear Query</Button>
+        {/* Clears query section, table, and database. */}
+        <Button type="default" onClick={clearDatabase} icon={<WarningOutlined />}>Remove All Data Entries</Button>
+        {/* Sends user to CodeAcademy SQL cheatsheet. */}
+        <Button type="default" onClick={sqlHelp} icon={<InfoCircleOutlined />}>SQL Help</Button>
+      </Menu>
+
       {/* Creates querying section. Automatically updates myVar on change. */}
-      <TextArea rows={4} 
+      <TextArea 
+        id="textarea"
+        rows={4} 
         placeholder="Hello! Here is where you will enter your SQL queries." 
         maxLength={2000} 
         onChange={(e) => setMyVar(e.target.value)}
       />
-
-      {/* Sends user's SQL query to base.py for evaluation. */}
-      <button type="button" class="submit" onClick = {postData}>Submit SQL</button>
-      
-      {/* Refreshes page, clearing the table and SQL query. */}
-      <input type="button" class="submit" id="btnDelete" value="Reset Table & Query Section" onClick={clearWebApp}/>
 
       {/* Creates table with empty section, instructing the user how to proceed. */}
       <table id="csv-table">
