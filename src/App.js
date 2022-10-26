@@ -1,15 +1,14 @@
 /*
-Last updated: 10/22/2022
+Last updated: 10/26/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 TODO:
 - Make it so that 'Submit Query' automatically sends and updates table.
 - Make it so that tables can be uploaded without refreshing.
-- Create layout feature where query input is on one side and table is on the other. (Ant Design layouts)
 - Allow user to save queries/commands.
 */
 
 // Import necessary libraries.
-import { Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
+import { BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
 import { CodeOutlined, ClearOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import Papa from "papaparse";
 import React from 'react';
@@ -251,7 +250,7 @@ const App = () =>
     <>
       {/* Introduction section, displays title of application and creator. */}
       <Divider>Open Avenues Datascrubbing Application</Divider>
-      <Text><p>This application was created by Aine Bolton during her Open Avenues Datascrubbing Application micro-internship. For more information, please see the Documentation tab.</p></Text>
+      <Text><p>This application was created by Aine Bolton with mentorship from Rishabh Gupta during her Open Avenues Datascrubbing Application micro-internship. For more information, please see the Documentation tab.</p></Text>
       
       {/* Collapsable section. Displays usage and documentation. */}
       <Collapse defaultActiveKey={['0']} onChange={onChange}>
@@ -323,7 +322,9 @@ const App = () =>
             </Empty> 
             </tbody>
       </table>
-    </>
+
+      <BackTop/>
+      </>
   );
 };
 export default App;
