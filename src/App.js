@@ -1,5 +1,5 @@
 /*
-Last updated: 10/26/2022
+Last updated: 10/29/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 TODO:
 - Make it so that 'Submit Query' automatically sends and updates table.
@@ -8,16 +8,44 @@ TODO:
 */
 
 // Import necessary libraries.
-import { BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
+import { Table, BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
 import { CodeOutlined, ClearOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import Papa from "papaparse";
-import React from 'react';
+import React, { useState } from 'react';
 import "./App.css";
 
 // Declare constants.
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { TextArea } = Input;
+
+    // Sample Data for the table
+    const dataSource = [
+      //{ greeting: "This is a pregenerated greeting."}
+    ];
+
+  fetch('/hello')
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (json) {
+      //data = JSON.stringify(json, null, 1);
+      //var myResult = JSON.stringify(json, null, 1)
+      let myResult = JSON.stringify(json, null, 1);
+      dataSource.push(myResult)
+      console.log(dataSource);
+      //document.write(dataSource);
+  });
+
+  // Sample Columns data
+  const columns = [
+    {
+        title: 'Greeting',
+        dataIndex: 'greeting',
+        key: 'greeting',
+    },
+  ];
+
 
 const App = () => 
 {
@@ -248,21 +276,25 @@ const App = () =>
 
   return (
     <>
+
+      <Table dataSource={dataSource} columns={columns} />
+
       {/* Introduction section, displays title of application and creator. */}
       <Divider>Open Avenues Datascrubbing Application</Divider>
       <Text><p>This application was created by Aine Bolton with mentorship from Rishabh Gupta during her Open Avenues Datascrubbing Application micro-internship. For more information, please see the Documentation tab.</p></Text>
-      
+
       {/* Collapsable section. Displays usage and documentation. */}
       <Collapse defaultActiveKey={['0']} onChange={onChange}>
         <Panel header="Documentation" key="1">
           <Text><p>The purpose of this application is to allow a user to create a query into a table named <Text mark>Logins</Text> and then return the result of that query.</p></Text>
           <Text><p>To use this application:</p></Text>
-          <Text><p>1. Enter your SQL query in the section above  <Text code>Submit SQL</Text>.</p></Text>
-          <Text><p>2. Press <Text code>Submit SQL</Text>.</p></Text>
+          <Text><p>1. Enter your SQL query in the textarea below the toolbar.</p></Text>
+          <Text><p>2. Press <Text code>Execute Query</Text>.</p></Text>
           <Text><p>3. Click <Text code>Choose File</Text> and browse until you locate <Text code>results.csv</Text>. (Tip: You can find it in the <Text mark>.../datascrubbing/flask</Text> folder.)</p></Text>
           <Text><p>4. View the result from your query below.</p></Text>
-          <Text><p>5. Press <Text code>Reset Table & Query Section</Text> and click <Text code>Yes</Text> in the prompt to type and submit a new query.</p></Text>
-          <Text><p>Tip: Use the <Text code>Pregenerated Commands</Text> tab for a few basic sample queries and sample tables.</p></Text>
+          <Text><p>5. Press <Text code>Clear Query</Text> and click <Text code>Yes</Text> in the prompt to remove your current view of the table and your query.</p></Text>
+          <Text><p>Tip: If you would like to clear the database containing your table and all your work, click <Text code>Remove All Data Entries</Text>.</p></Text>
+          <Text><p>Tip: Use the <Text code>Generated Sample Entries</Text> tab for a few basic sample queries and sample tables.</p></Text>
           
           {/* Collapsable section. Displays troubleshooting guide. */}
           <Collapse defaultActiveKey={['0']} onChange={onChange}>
