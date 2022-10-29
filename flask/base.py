@@ -16,7 +16,7 @@ api = Flask(__name__)
 @api.route('/hello', methods=['GET', 'POST'])
 def hello():
 
-    # POST request
+    # POST request ##### ISSUE WITH FETCH OCCURS HERE.
     if request.method == 'POST':
         print('Post successful')
         #print(request.get_json())  # parse as JSON
