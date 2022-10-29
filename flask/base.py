@@ -6,12 +6,32 @@ Once query has been executed, returns the results to 'results.csv' and closes th
 '''
 
 # Import necessary libraries.
-from flask import Flask, request
+from flask import Flask, jsonify, request, render_template
 import psycopg2
 import csv
 
 # Creates an instance of the web application under the name 'api'.
 api = Flask(__name__)
+
+@api.route('/hello', methods=['GET', 'POST'])
+def hello():
+
+    # POST request
+    if request.method == 'POST':
+        print('Post successful')
+        #print(request.get_json())  # parse as JSON
+        return 'OK', 200
+
+    # GET request
+    else:
+        print('Response successful')
+        response_body = {'greeting':'Hello from Flask!'}
+        return jsonify(response_body)  # serialize and use JSON headers
+'''
+@api.route('/test')
+def test_page():
+    # look inside `templates` and serve `index.html`
+    return render_template('index.html')'''
 
 '''
 Section: Query Database
