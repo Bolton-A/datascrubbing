@@ -27,11 +27,6 @@ def hello():
         print('Response successful')
         response_body = {'greeting':'Hello from Flask!'}
         return jsonify(response_body)  # serialize and use JSON headers
-'''
-@api.route('/test')
-def test_page():
-    # look inside `templates` and serve `index.html`
-    return render_template('index.html')'''
 
 '''
 Section: Query Database
