@@ -1,5 +1,5 @@
 '''
-Last updated: 10/21/2022
+Last updated: 10/29/2022
 Description: Code connects to PostgreSQL through psycopg2, uses 'myVar' variable sent by App.js to execute a query to the database.
 Once query has been executed, returns the results to 'results.csv' and closes the database.
 
