@@ -1,5 +1,5 @@
 /*
-Last updated: 10/29/2022
+Last updated: 10/31/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 TODO:
 - Make it so that 'Submit Query' automatically sends and updates table.
@@ -11,44 +11,45 @@ TODO:
 import { Table, BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
 import { CodeOutlined, ClearOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import Papa from "papaparse";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./App.css";
+import axios from 'axios';
 
 // Declare constants.
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { TextArea } = Input;
 
-    // Sample Data for the table
-    const dataSource = [
-      //{ greeting: "This is a pregenerated greeting."}
-    ];
-
-  fetch('/hello')
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (json) {
-      //data = JSON.stringify(json, null, 1);
-      //var myResult = JSON.stringify(json, null, 1)
-      let myResult = JSON.stringify(json, null, 1);
-      dataSource.push(myResult)
-      console.log(dataSource);
-      //document.write(dataSource);
-  });
-
-  // Sample Columns data
-  const columns = [
+function App (props)
+{
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([
     {
         title: 'Greeting',
         dataIndex: 'greeting',
         key: 'greeting',
     },
-  ];
+  ]);
+  useEffect(() => {
+    
+        fetch('/hello', { method:'GET'})
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+          //data = JSON.stringify(json, null, 1);
+          //var myResult = JSON.stringify(json, null, 1)
 
+          //let myResult = JSON.stringify(json, null, 1);
+          //data.push(myResult)
 
-const App = () => 
-{
+          setData(JSON.parse(JSON.stringify(json, null, 1)));
+          //document.write(dataSource);
+      });
+  }, []);
+
+  console.log("Test two: ", data);
+  //window.alert(JSON.stringify(data));
 
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
@@ -276,8 +277,8 @@ const App = () =>
 
   return (
     <>
-
-      <Table dataSource={dataSource} columns={columns} />
+      {console.log("Test three: ", data)}
+      <Table data={data} columns={columns} />
 
       {/* Introduction section, displays title of application and creator. */}
       <Divider>Open Avenues Datascrubbing Application</Divider>
