@@ -52,9 +52,6 @@ function App (props)
     setColumns(columns);
   }, [data]);
 
-  console.log("Test two: ", data);
-  //window.alert(JSON.stringify(data));
-
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
 
@@ -282,7 +279,6 @@ function App (props)
   return (
     <>
       {console.log("Columns: ", columns)}
-      {console.log("Test three: ", data)}
       <Text>{JSON.stringify(data)}</Text>
       <Table data={JSON.parse(JSON.stringify(data))} columns={columns} />
 
