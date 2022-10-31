@@ -1,5 +1,5 @@
 /*
-Last updated: 10/31/2022
+Last updated: 10/26/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 TODO:
 - Make it so that 'Submit Query' automatically sends and updates table.
@@ -47,6 +47,10 @@ function App (props)
           //document.write(dataSource);
       });
   }, []);
+
+  useEffect(() => {
+    setColumns(columns);
+  }, [data]);
 
   console.log("Test two: ", data);
   //window.alert(JSON.stringify(data));
@@ -277,8 +281,10 @@ function App (props)
 
   return (
     <>
+      {console.log("Columns: ", columns)}
       {console.log("Test three: ", data)}
-      <Table data={data} columns={columns} />
+      <Text>{JSON.stringify(data)}</Text>
+      <Table data={JSON.parse(JSON.stringify(data))} columns={columns} />
 
       {/* Introduction section, displays title of application and creator. */}
       <Divider>Open Avenues Datascrubbing Application</Divider>
