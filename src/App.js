@@ -23,13 +23,14 @@ const { TextArea } = Input;
 function App (props)
 {
   const [data, setData] = useState([]);
-  const [columns, setColumns] = useState([
+  /*const [columns, setColumns] = useState([
     {
         title: 'Greeting',
         dataIndex: 'greeting',
         key: 'greeting',
     },
-  ]);
+  ]);*/
+
   useEffect(() => {
     
         fetch('/hello', { method:'GET'})
@@ -48,9 +49,10 @@ function App (props)
       });
   }, []);
 
-  useEffect(() => {
-    setColumns(columns);
-  }, [data]);
+  let columns = 
+  [
+
+  ]
 
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
