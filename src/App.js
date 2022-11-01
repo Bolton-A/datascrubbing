@@ -23,14 +23,13 @@ const { TextArea } = Input;
 function App (props)
 {
   const [data, setData] = useState([]);
-  /*const [columns, setColumns] = useState([
+  const [columns, setColumns] = useState([
     {
         title: 'Greeting',
         dataIndex: 'greeting',
         key: 'greeting',
     },
-  ]);*/
-
+  ]);
   useEffect(() => {
     
         fetch('/hello', { method:'GET'})
@@ -49,10 +48,14 @@ function App (props)
       });
   }, []);
 
-  let columns = 
-  [
+  console.log("Try again: ", data);
+          columns.push(data)
 
-  ]
+  useEffect(() => {
+    setColumns(columns);
+  }, [data]);
+
+  //window.alert(JSON.stringify(data));
 
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
@@ -280,6 +283,7 @@ function App (props)
 
   return (
     <>
+      {console.log("Data: ", data)}
       {console.log("Columns: ", columns)}
       <Text>{JSON.stringify(data)}</Text>
       <Table data={JSON.parse(JSON.stringify(data))} columns={columns} />
