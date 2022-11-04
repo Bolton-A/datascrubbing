@@ -1,62 +1,23 @@
 /*
-Last updated: 10/26/2022
+Last updated: 11/04/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
-TODO:
-- Make it so that 'Submit Query' automatically sends and updates table.
-- Make it so that tables can be uploaded without refreshing.
-- Allow user to save queries/commands.
 */
 
 // Import necessary libraries.
-import { Table, BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
-import { CodeOutlined, ClearOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
+import { Layout, BackTop, Button, Collapse, Divider, Empty, Input, Menu, Typography } from 'antd';
+import { CodeOutlined, ClearOutlined, CloseSquareOutlined, ConsoleSqlOutlined, CopyOutlined, InfoCircleOutlined, WarningOutlined } from '@ant-design/icons';
 import Papa from "papaparse";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import "./App.css";
-import axios from 'axios';
 
 // Declare constants.
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { TextArea } = Input;
+const { Header, Sider, Content } = Layout;
 
 function App (props)
 {
-  const [data, setData] = useState([]);
-  const [columns, setColumns] = useState([
-    {
-        title: 'Greeting',
-        dataIndex: 'greeting',
-        key: 'greeting',
-    },
-  ]);
-  useEffect(() => {
-    
-        fetch('/hello', { method:'GET'})
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (json) {
-          //data = JSON.stringify(json, null, 1);
-          //var myResult = JSON.stringify(json, null, 1)
-
-          //let myResult = JSON.stringify(json, null, 1);
-          //data.push(myResult)
-
-          setData(JSON.parse(JSON.stringify(json, null, 1)));
-          //document.write(dataSource);
-      });
-  }, []);
-
-  console.log("Try again: ", data);
-          columns.push(data)
-
-  useEffect(() => {
-    setColumns(columns);
-  }, [data]);
-
-  //window.alert(JSON.stringify(data));
-
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
 
@@ -86,7 +47,6 @@ function App (props)
       else 
       {
         parseCSV(fileInput.files[0]);
-        
       }
     };
     
@@ -143,11 +103,21 @@ function App (props)
   */
   function sendRequest()
   {
-    const request = new XMLHttpRequest();
-    request.open('POST', '/profile', false);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.onreadystatechange = function(){};
-    request.send('myVar=' + myVar);
+      const request = new XMLHttpRequest();
+      request.open('POST', '/profile', false);
+      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      request.onreadystatechange = function(){};
+      request.send('myVar=' + myVar);
+  }
+
+  /*
+  Section: Clear SQL
+  Description: Removes the user's query by setting textarea to null. (Does not wipe their table or delete any data.)
+  */
+  function clearSQL ()
+  {
+    const myTextarea = document.getElementById('textarea');
+    myTextarea.value = '';
   }
 
   /*
@@ -170,7 +140,7 @@ function App (props)
     // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
     myVar = 'DELETE FROM Logins;'
     sendRequest()
-    myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'laura123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'ron345', 'ron@gmail.com', 2);"
+    myVar = "INSERT INTO Logins(username, password, useremail) VALUES ('LauraSmith', 'laura123', 'laura@gmail.com'), ('BobRoss', 'bs456', 'bob@gmail.com'), ('HannahSmith', 'hs789', 'hannah@gmail.com'), ('SamSamson', 'ss012', 'sam@gmail.com'), ('RonRob', 'ron345', 'ron@gmail.com');"
     sendRequest()
     viewAll()
     alert("You are ready to open the file for this sample!");
@@ -185,7 +155,7 @@ function App (props)
     // Sets 'myVar' to a query that removes all entries and sends to Flask to execute. Displays success message.
     myVar = 'DELETE FROM Logins;'
     sendRequest()
-    myVar = "INSERT INTO Logins(username, password, useremail, tickettime) VALUES ('LauraSmith', 'ls123', 'laura@gmail.com', 2), ('BobRoss', 'bs456', 'bob@gmail.com', 2), ('HannahSmith', 'hs789', 'hannah@gmail.com', 2), ('SamSamson', 'ss012', 'sam@gmail.com', 2), ('RonRob', 'rr345', 'ron@gmail.com', 2), ('TinaNash', 'tn678', 'tina@gmail.com', 2), ('LutherTodd', 'lt901', 'luther@gmail.com', 2), ('GertrudeRamirez', 'gr234', 'gertrude@gmail.com', 2), ('ErvinPadilla', 'ep567', 'ervin@gmail.com', 2), ('TerrenceClark', 'tc890', 'terraence@gmail.com', 2), ('DaveFreeman', 'df123', 'dave@gmail.com', 2), ('JoseWalt', 'jw456', 'jose@gmail.com', 2), ('KariGutierrez', 'kg789', 'kari@gmail.com', 2), ('LeonardFrank', 'lf012', 'leonard@gmail.com', 2), ('SilviaRoss', 'sr345', 'silvia@gmail.com', 2), ('DarinFletcher', 'df678', 'darin@gmail.com', 2), ('HoraceCarrol', 'hc901', 'horace@gmail.com', 2), ('EarlSwanson', 'es234', 'earl@gmail.com', 2), ('VanessaWoods', 'vw567', 'vanessa@gmail.com', 2), ('RubyEdwards', 're890', 'ruby@gmail.com', 2);"
+    myVar = "INSERT INTO Logins(username, password, useremail) VALUES ('LauraSmith', 'ls123', 'laura@gmail.com'), ('BobRoss', 'bs456', 'bob@gmail.com'), ('HannahSmith', 'hs789', 'hannah@gmail.com'), ('SamSamson', 'ss012', 'sam@gmail.com'), ('RonRob', 'rr345', 'ron@gmail.com'), ('TinaNash', 'tn678', 'tina@gmail.com'), ('LutherTodd', 'lt901', 'luther@gmail.com'), ('GertrudeRamirez', 'gr234', 'gertrude@gmail.com'), ('ErvinPadilla', 'ep567', 'ervin@gmail.com'), ('TerrenceClark', 'tc890', 'terraence@gmail.com'), ('DaveFreeman', 'df123', 'dave@gmail.com'), ('JoseWalt', 'jw456', 'jose@gmail.com'), ('KariGutierrez', 'kg789', 'kari@gmail.com'), ('LeonardFrank', 'lf012', 'leonard@gmail.com'), ('SilviaRoss', 'sr345', 'silvia@gmail.com'), ('DarinFletcher', 'df678', 'darin@gmail.com'), ('HoraceCarrol', 'hc901', 'horace@gmail.com'), ('EarlSwanson', 'es234', 'earl@gmail.com'), ('VanessaWoods', 'vw567', 'vanessa@gmail.com'), ('RubyEdwards', 're890', 'ruby@gmail.com');"
     sendRequest()
     viewAll()
     alert("You are ready to open the file for this sample!");
@@ -224,7 +194,7 @@ function App (props)
 
   /*
   Section: Clear Web Application
-  Description: Refreshes window, clearing the table and the query input section.(DOES NOT CLEAR DATABASE/results.csv).
+  Description: Refreshes window, clearing the table and the query input section. (Does not clear the database/results.csv).
   Provides the user with a prompt informing user of what will happen and asking if they would like to contionue before refreshing.
   */
   function clearWebApp() 
@@ -283,89 +253,100 @@ function App (props)
 
   return (
     <>
-      {console.log("Data: ", data)}
-      {console.log("Columns: ", columns)}
-      <Text>{JSON.stringify(data)}</Text>
-      <Table data={JSON.parse(JSON.stringify(data))} columns={columns} />
+      {/*Layout section, organizes user interface to allow user to more easily see the table they are working on alongside their query.*/}
+      <Layout>
+        <Header class="header">
+            {/* Introduction section, displays title of application and creator. */}
+            <Divider>Open Avenues Datascrubbing Application</Divider>
+            <Text><p>This application was created by Aine Bolton with mentorship from Rishabh Gupta during her Open Avenues Datascrubbing Application micro-internship. For more information, please see the Documentation tab.</p></Text>
 
-      {/* Introduction section, displays title of application and creator. */}
-      <Divider>Open Avenues Datascrubbing Application</Divider>
-      <Text><p>This application was created by Aine Bolton with mentorship from Rishabh Gupta during her Open Avenues Datascrubbing Application micro-internship. For more information, please see the Documentation tab.</p></Text>
+            {/* Collapsable section. Displays usage and documentation. */}
+            <Collapse defaultActiveKey={['0']} onChange={onChange}>
+              <Panel header="Documentation" key="1">
+                <Text><p>The purpose of this application is to allow a user to create a query into a table named <Text mark>Logins</Text> and then return the result of that query.</p></Text>
+                <Text><p>To use this application:</p></Text>
+                <Text><p>1. Enter your SQL query in the textarea below the toolbar.</p></Text>
+                <Text><p>2. Press <Text code>Execute Query</Text>.</p></Text>
+                <Text><p>3. Click <Text code>Choose File</Text> and browse until you locate <Text code>results.csv</Text>. (Tip: You can find it in the <Text mark>.../datascrubbing/flask</Text> folder.)</p></Text>
+                <Text><p>4. View the result in the table on the left. If your result is empty or has not changed, then you have likely entered an invalid query.</p></Text>
+                <Text><p>5. Press <Text code>Clear Table</Text> and click <Text code>Yes</Text> in the prompt to remove your current view of the table and your query.</p></Text>
+                <Text><p>Tip: If you would like to clear the database containing your table and all your work, click <Text code>Remove All Data Entries</Text>.</p></Text>
+                <Text><p>Tip: Use the <Text code>Generate Sample Entries</Text> tab for a few basic sample tables.</p></Text>
+                
+                {/* Collapsable section. Displays troubleshooting guide. */}
+                <Collapse defaultActiveKey={['0']} onChange={onChange}>
+                  <Panel header="Troubleshooting" key="1">
+                    <Text><p>This guide is intended to provide assistance to users in the event that an error occurs with this application.</p></Text>
+                    <Text><p><Text strong>Problem: "I clicked <Text code>Submit SQL</Text> but I can't see my table."</Text></p></Text>
+                    <Text><p>Solution: After submitting your query through <Text code>Submit SQL</Text>, you must click <Text code>Choose File</Text> and select <Text code>results.csv</Text>. If you have entered a correct SQL statement then this will display the table.</p></Text>
+                    <Text><p><Text strong>Problem: "I tried to select all results in the table but the table came back empty.</Text></p></Text>
+                    <Text><p>Solution: Either you have not entered data into the Logins table (through your own query or pregenerated samples), or your SQL statement is invalid. You can either select <Text code>Pregenerated Commands</Text> and one of the <Text code>Insert Sample Entries</Text> commands or create an INSERT INTO using the SQL query function to make your own table. If you are certain that your the data within the table has been generated then please ensure that your SQL statement is valid.</p></Text>
+                    <Text><p><Text strong>Problem: "Why can't I upload the updated table?"</Text></p></Text>
+                    <Text><p>Solution: If you already have a table loaded on the screen, then you will need to refresh the page before uploading the updated one. To refresh the table, please click <Text code>Clear Table</Text>. Either copy and paste your query (you can easily copy your SQL query through <Text code>Copy to Clipboard</Text>) to the refreshed page or send the query prior to refreshing — of which it will already be loaded within the file once the page has refreshed.</p></Text>
+                  </Panel>
+                </Collapse>
+              </Panel>
+            </Collapse>
+        </Header>
 
-      {/* Collapsable section. Displays usage and documentation. */}
-      <Collapse defaultActiveKey={['0']} onChange={onChange}>
-        <Panel header="Documentation" key="1">
-          <Text><p>The purpose of this application is to allow a user to create a query into a table named <Text mark>Logins</Text> and then return the result of that query.</p></Text>
-          <Text><p>To use this application:</p></Text>
-          <Text><p>1. Enter your SQL query in the textarea below the toolbar.</p></Text>
-          <Text><p>2. Press <Text code>Execute Query</Text>.</p></Text>
-          <Text><p>3. Click <Text code>Choose File</Text> and browse until you locate <Text code>results.csv</Text>. (Tip: You can find it in the <Text mark>.../datascrubbing/flask</Text> folder.)</p></Text>
-          <Text><p>4. View the result from your query below.</p></Text>
-          <Text><p>5. Press <Text code>Clear Query</Text> and click <Text code>Yes</Text> in the prompt to remove your current view of the table and your query.</p></Text>
-          <Text><p>Tip: If you would like to clear the database containing your table and all your work, click <Text code>Remove All Data Entries</Text>.</p></Text>
-          <Text><p>Tip: Use the <Text code>Generated Sample Entries</Text> tab for a few basic sample queries and sample tables.</p></Text>
-          
-          {/* Collapsable section. Displays troubleshooting guide. */}
+        <Layout>
+
+        <Sider class="sider">
+          {/* Creates table with empty section, instructing the user how to proceed. */}
+          <table id="csv-table">
+            <tbody id="csv-table__body">
+              <Empty class='empty'>
+                <Text><p>Enter your query, press <Text code>Execute Query</Text> then click <Text code>Choose File</Text> to get started!</p></Text>
+              </Empty> 
+            </tbody>
+          </table>
+        </Sider>
+
+        <Content class="content">
+
+          {/* Collapsable section. Displays pregenerated command buttons. */}
           <Collapse defaultActiveKey={['0']} onChange={onChange}>
-            <Panel header="Troubleshooting" key="1">
-              <Text><p>This guide is intended to provide assistance to users in the event that an error occurs with this application.</p></Text>
-              <Text><p><Text strong>Problem: "I clicked <Text code>Submit SQL</Text> but I can't see my table."</Text></p></Text>
-              <Text><p>Solution: After submitting your query through <Text code>Submit SQL</Text>, you must click <Text code>Choose File</Text> and select <Text code>results.csv</Text>. This will display the table.</p></Text>
-              <Text><p><Text strong>Problem: "I tried to select all results in the table but the table came back empty.</Text></p></Text>
-              <Text><p>Solution: Your table is probably empty. You can either select <Text code>Pregenerated Commands</Text> and one of the <Text code>Insert Sample Entries</Text> commands or create an INSERT INTO using the SQL query function to make your own table.</p></Text>
-              <Text><p><Text strong>Problem: "Why can't I upload the updated table?"</Text></p></Text>
-              <Text><p>Solution: To refresh the table, please click <Text code>Reset Table & Query Section</Text>. Either copy and paste your query to the refreshed page or send the query prior to refreshing. If you send it before then it should still work just fine!</p></Text>
+            <Panel header="Generate Sample Entries" key="1">
+            <Text class="samples">All sample entries will be generated to the Logins table.</Text>
+              {/* Loads five sample entries into Logins. */}
+              <button type="button" class="submit" onClick = {fiveSample}>Insert Five Sample Entries</button>
+              {/* Loads twenty sample entries into Logins. */}
+              <button type="button" class="submit" onClick = {twentySample}>Insert Twenty Sample Entries</button>
             </Panel>
           </Collapse>
-        </Panel>
-      </Collapse>
 
-      {/* Collapsable section. Displays pregenerated command buttons. */}
-      <Collapse defaultActiveKey={['0']} onChange={onChange}>
-        <Panel header="Generate Sample Entries" key="1">
-          {/* Loads five sample entries into Logins. */}
-          <button type="button" class="submit" onClick = {fiveSample}>Insert Five Sample Entries</button>
-          {/* Loads twenty sample entries into Logins. */}
-          <button type="button" class="submit" onClick = {twentySample}>Insert Twenty Sample Entries</button>
-        </Panel>
-      </Collapse>
+          {/* Displays a menu of buttons. */}
+          <Menu class="menu" mode="horizontal">
+            {/* Selects all results from table. */}
+            <Button type="default" onClick={selectAll} icon={<CodeOutlined />}>Select All</Button>
+            {/* Updates results.csv with results. */}
+            <Button type="default" onClick = {postData} icon={<ConsoleSqlOutlined />}>Execute Query</Button>
+            {/* Copies textarea to clipboard. */}
+            <Button type="default" onClick={copyText} icon={<CopyOutlined />}>Copy to Clipboard</Button>
+            {/* Clears SQL query. (DOES NOT CLEAR TABLE OR DATABASE.*/}
+            <Button type="default" onClick={clearSQL} icon={<CloseSquareOutlined />}>Clear SQL</Button>
+            {/* Clears clears query section and table. (DOES NOT CLEAR DATABASE.) */}
+            <Button type="default" onClick={clearWebApp} icon={<ClearOutlined />}>Clear Table</Button>
+            {/* Clears query section, table, and database. */}
+            <Button type="default" onClick={clearDatabase} icon={<WarningOutlined />}>Remove All Data Entries</Button>
+            {/* Sends user to CodeAcademy SQL cheatsheet. */}
+            <Button type="default" onClick={sqlHelp} icon={<InfoCircleOutlined />}>SQL Help</Button>
+          </Menu>
 
-      {/* Displays a menu of buttons. */}
-      <Menu class="menu" mode="horizontal">
-        {/* Selects all results from table. */}
-        <Button type="default" onClick={selectAll} icon={<CodeOutlined />}>Select All</Button>
-        {/* Updates results.csv with results. */}
-        <Button type="default" onClick = {postData} icon={<ConsoleSqlOutlined />}>Execute Query</Button>
-        {/* Copies textarea to clipboard. */}
-        <Button type="default" onClick={copyText} icon={<CopyOutlined />}>Copy to Clipboard</Button>
-        {/* Clears clears query section and table. (DOES NOT CLEAR DATABASE.) */}
-        <Button type="default" onClick={clearWebApp} icon={<ClearOutlined />}>Clear Query</Button>
-        {/* Clears query section, table, and database. */}
-        <Button type="default" onClick={clearDatabase} icon={<WarningOutlined />}>Remove All Data Entries</Button>
-        {/* Sends user to CodeAcademy SQL cheatsheet. */}
-        <Button type="default" onClick={sqlHelp} icon={<InfoCircleOutlined />}>SQL Help</Button>
-      </Menu>
+          {/* Creates querying section. Automatically updates myVar on change. */}
+          <TextArea 
+            id="textarea"
+            rows={5} 
+            placeholder="Here is where you will enter your SQL queries. Example: &#10;SELECT username, useremail &#10;FROM Logins &#10;WHERE username LIKE 'L%';" 
+            maxLength={2000} 
+            onChange={(e) => setMyVar(e.target.value)}
+          />
+        </Content>
 
-      {/* Creates querying section. Automatically updates myVar on change. */}
-      <TextArea 
-        id="textarea"
-        rows={4} 
-        placeholder="Hello! Here is where you will enter your SQL queries." 
-        maxLength={2000} 
-        onChange={(e) => setMyVar(e.target.value)}
-      />
-
-      {/* Creates table with empty section, instructing the user how to proceed. */}
-      <table id="csv-table">
-          <tbody id="csv-table__body">
-            <Empty class='empty'>
-              <Text><p>Enter your query, press <Text code>Submit SQL</Text> then click <Text code>Choose File</Text> to get started!</p></Text>
-            </Empty> 
-            </tbody>
-      </table>
-
-      <BackTop/>
-      </>
+      </Layout>
+    </Layout>
+    <BackTop/>
+  </>
   );
 };
 export default App;
@@ -375,4 +356,5 @@ REFERENCES:
 https://codepen.io/davewallace/pen/zwwRoN: Used for creating textarea.
 https://www.codecademy.com/forum_questions/512d28a06918338f2300e9ea: Used for creating application alerts.
 https://codepen.io/manifoldkaizen/pen/jYmbGy: Used for opening results.csv and converting to table.
+https://ant.design/: Used for creating the components 
 */
