@@ -2,7 +2,6 @@
 Last updated: 10/29/2022
 Description: Code connects to PostgreSQL through psycopg2, uses 'myVar' variable sent by App.js to execute a query to the database.
 Once query has been executed, returns the results to 'results.csv' and closes the database.
-
 '''
 
 # Import necessary libraries.
@@ -12,21 +11,6 @@ import csv
 
 # Creates an instance of the web application under the name 'api'.
 api = Flask(__name__)
-
-@api.route('/hello', methods=['GET', 'POST'])
-def hello():
-
-    # POST request ##### ISSUE WITH FETCH OCCURS HERE.
-    if request.method == 'POST':
-        print('Post successful')
-        #print(request.get_json())  # parse as JSON
-        return 'OK', 200
-
-    # GET request
-    else:
-        print('Response successful')
-        response_body = {'greeting':'Hello from Flask!'}
-        return jsonify(response_body)  # serialize and use JSON headers
 
 '''
 Section: Query Database
@@ -41,7 +25,7 @@ def myFunction():
     cursor = conn.cursor()
     query = request.form['myVar']
     cursor.execute(query)
-    rows = cursor.fetchall();
+    rows = cursor.fetchall()
 
     # If query returns anything, create list of result and column_names. Append each to two seperate lists.
     if rows:
