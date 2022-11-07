@@ -1,5 +1,5 @@
 /*
-Last updated: 11/04/2022
+Last updated: 11/07/2022
 Description: Sets up content that is taken from ./base.py and is used in website.
 */
 
@@ -18,6 +18,7 @@ const { Header, Sider, Content } = Layout;
 
 function App (props)
 {
+
   // Calls the function to prepare to create a table when csv is loaded. (Described further below.)
   populateToTable()
 
@@ -168,17 +169,26 @@ function App (props)
   function selectAll()
   {
     viewAll()
-    alert("Your query was successfully submitted!");
+    alert("All fields from the Logins table have been selected!");
   }
 
   /*
   Section: Post Data
-  Description: Calls for Send Request to send myVar to base.py and displays success message.
+  Description: Calls for Send Request to send myVar to base.py and displays success message. Checks to ensure field is not empty.
   */
   function postData()
   {
-    sendRequest()
-    alert("Your SQL was successfully submitted!");
+    // If textarea has a value, send request and display success message.
+    if(document.getElementById("textarea").value != '')
+    {
+      sendRequest()
+      alert("Your SQL was successfully submitted!");
+    }
+    // If textarea does not have a value, display error message.
+    else
+    {
+      alert("Your SQL query is empty. Please type your query.")
+    }
   }
 
   /*
