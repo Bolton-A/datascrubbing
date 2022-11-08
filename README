@@ -1,183 +1,39 @@
-<a name="readme-top"></a>
-<!--
-Last updated: 10/10/2022
-Description: Displays documentation information on the datascrubbing application.
-TODO:
-*** Add 'Getting Started' section.
-*** Add 'Prerequisites' section.
-*** Add 'Installation' section.
-*** Add 'Usage' section.
-*** Add 'Roadmap' section.
-*** Add 'Contributing' section.
--->
+Summary
 
-<h3 align="center">Open Avenues Datascrubbing Application</h3>
+Website application that:
+- Allows user to type and enter queries on the frontend application, send to the backend, and display in tabular format.
+- Documentation is included within the site as well as troubleshooting.
+- Allows user to generate two sample entry files within the database (one with five sample entries and another with twenty sampl entries).
+- Features a number of buttons for ease of usage such as:
+*** Select All: Selects all queries and enters to table.
+*** Execute Query: Execute's user's query.
+*** Copy to Clipboard: Copies user's query to clipboard.
+*** Clear SQL: Clear's user's query.
+*** Clear Table: Refreshes page, removing user's query and table.
+*** Remove All Data Entries: Clears Logins table.
+*** SQL Help: Sends user to CodeAcademy for help with SQL.
 
-  <p align="center">
-Full-stack datascrubbing database website application using Python, React, and Flask.
-    <br />
-    <a href="https://github.com/Bolton-A/datascrubbing/blob/main/README.md"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/Bolton-A/datascrubbing">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
-  </p>
-</div>
+Documentation and Usage
 
+The purpose of this application is to allow a user to create a query into a table named Logins and then return the result of that query.
+To use this application:
+1. Enter your SQL query in the textarea below the toolbar.
+2. Press Execute Query.
+3. Click Choose File and browse until you locate results.csv. (Tip: You can find it in the .../datascrubbing/flask folder.)
+4. View the result in the table on the left. If your result is empty or has not changed, then you have likely entered an invalid query.
+5. Press Clear Table and click Yes in the prompt to remove your current view of the table and your query.
+Tip: If you would like to clear the database containing your table and all your work, click Remove All Data Entries.
+Tip: Use the Generate Sample Entries tab for a few basic sample tables.
 
+Troubleshooting
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+This guide is intended to provide assistance to users in the event that an error occurs with this application.
 
+Problem: "I clicked Submit SQL but I can't see my table."
+Solution: After submitting your query through Submit SQL, you must click Choose File and select results.csv. If you have entered a correct SQL statement then this will display the table.
 
+Problem: "I tried to select all results in the table but the table came back empty.
+Solution: Either you have not entered data into the Logins table (through your own query or pregenerated samples), or your SQL statement is invalid. You can either select Pregenerated Commands and one of the Insert Sample Entries commands or create an INSERT INTO using the SQL query function to make your own table. If you are certain that your the data within the table has been generated then please ensure that your SQL statement is valid.
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-This project was built by Aine Bolton from the University of Akron as part of a micro-internship under Open Avenues. This program is designed to be a full-stack Python web-application designed to take in and erase current fields within a database and to generate 'test data'. Utilized account verification to ensure that client data cannot be accessed by outside parties. Uses React and PostgreSQL to allow users to navigate the web-application and query sample data.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-### Built With
-
-* [React.JS](https://reactjs.org/) - Used to create frontend user framework.
-* [Flask](https://flask.palletsprojects.com/en/2.2.x/) - Used to connect backend Python to frontend.
-* [Python](https://www.python.org/) - Used to build backend and display information from database.
-* [PostgreSQL](https://www.postgresql.org/) - Used to create backend database.
-* [HTML](https://html.com/)/[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)/[JavaScript](https://www.javascript.com/) - Used to create frontend display.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started - WORK IN PROGRESS
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites - WORK IN PROGRESS
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation - WORK IN PROGRESS
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage - WORK IN PROGRESS
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap - WORK IN PROGRESS
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing - WORK IN PROGRESS
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Aine Bolton - [LinkedIn](https://www.linkedin.com/in/aine-bolton/) - boltonaine@gmail.com
-
-Project Link: [https://github.com/Bolton-A/datascrubbing](https://github.com/Bolton-A/datascrubbing)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* [Best-README-Template by othneildrew](https://github.com/othneildrew/Best-README-Template). Template used for the creation of the README documentation page.
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Problem: "Why can't I upload the updated table?"
+Solution: If you already have a table loaded on the screen, then you will need to refresh the page before uploading the updated one. To refresh the table, please click Clear Table. Either copy and paste your query (you can easily copy your SQL query through Copy to Clipboard) to the refreshed page or send the query prior to refreshing — of which it will already be loaded within the file once the page has refreshed.
